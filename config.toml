@@ -1,0 +1,22 @@
+
+# wx-msg-push
+[server]
+addr = ":8777" # 端口
+maxhttptime = "5s" # 秒
+
+# 企业微信配置 可配多个应用
+[wechatconf.you_corp1_secret]
+corpid = "ww987654321" # 企业id
+corpsecret = "you_corp1_secret" # 应用Secret
+agentid = 1000002 # 应用AgentId
+mediaid = "" # 图片素材的media_id(如果仅使用文本消息可随意填写)
+enableduplicatecheck = 0 # 是否开启重复消息检测 1:开 0:关
+duplicatecheckinterval = 0 # 重复消息时间间隔 单位秒
+
+[wechatconf.you_corp2_secret]
+corpid = "ww987654322" # 企业id
+corpsecret = "you_corp2_secret" # 应用Secret
+agentid = 1000002 # 应用AgentId
+mediaid = "" # 图片素材的media_id(如果仅使用文本消息可随意填写)
+enableduplicatecheck = 0 # 是否开启重复消息检测 1:开 0:关
+duplicatecheckinterval = 0 # 重复消息时间间隔 单位秒
