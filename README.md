@@ -22,7 +22,7 @@
 
 ## 部署运行
 
-1. clone 本项目后执行编译 `make build`，编译其它平台参考 `Makefile`。
+1. clone 本项目后执行编译 `make build`，编译其它平台参考 `Makefile`。或者 `go get -u github.com/zyh94946/wx-msg-push` 直接安装可执行文件至 `$GOPATH/bin`。
 
 2. 修改配置文件 `config.toml`, 中的运行端口、企业微信配置。
 
