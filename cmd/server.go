@@ -41,8 +41,8 @@ func run() error {
 
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.Default()
-	router.GET("send_msg/:SECRET", GoSendMsg)
-	router.POST("send_msg/:SECRET", GoSendMsg)
+	router.GET("/:SECRET", GoSendMsg)
+	router.POST("/:SECRET", GoSendMsg)
 
 	PrintVersion()
 	cfg := conf.GetConfig()
