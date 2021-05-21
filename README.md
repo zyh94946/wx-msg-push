@@ -47,12 +47,12 @@
 
 GET方式
 
-`https://ip:port/CORP_SECRET?title=消息标题&content=消息内容&type=消息类型`
+`http://ip:port/CORP_SECRET?title=消息标题&content=消息内容&type=消息类型`
 
 POST方式
 
 ```bash
-$ curl --location --request POST 'https://ip:port/CORP_SECRET' \
+$ curl --location --request POST 'http://ip:port/CORP_SECRET' \
 --header 'Content-Type: application/json;charset=utf-8' \
 --data-raw '{"title":"消息标题","content":"消息内容","type":"消息类型"}'
 ```
