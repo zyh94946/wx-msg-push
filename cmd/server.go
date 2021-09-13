@@ -67,6 +67,7 @@ type msgData struct {
 	ToUser  string `form:"touser"`
 	ToParty string `form:"toparty"`
 	ToTag   string `form:"totag"`
+	MediaId string `form:"mediaid"`
 }
 
 func GoSendMsg(c *gin.Context) {
@@ -100,6 +101,10 @@ func GoSendMsg(c *gin.Context) {
 		CorpSecret: weChatConf.CorpSecret,
 	}
 
+	if msg.MediaId == "" {
+		msg.MediaId = weChatConf.MediaId
+	}
+
 	var appMsg api.AppMsg
 	opts := &api.MsgOpts{
 		ToUser:                 msg.ToUser,
@@ -108,7 +113,7 @@ func GoSendMsg(c *gin.Context) {
 		Title:                  msg.Title,
 		Content:                msg.Content,
 		AgentId:                weChatConf.AgentId,
-		MediaId:                weChatConf.MediaId,
+		MediaId:                msg.MediaId,
 		EnableDuplicateCheck:   weChatConf.EnableDuplicateCheck,
 		DuplicateCheckInterval: weChatConf.DuplicateCheckInterval,
 	}

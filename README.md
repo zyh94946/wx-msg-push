@@ -6,6 +6,7 @@
 
 1. 支持多企业微信应用
 2. 配置文件修改保存即生效，不需要重启服务
+3. 支持 mediaid 动态传入
 
 ## 消息限制
 
@@ -46,16 +47,18 @@
 
 支持推送消息至指定的 `touser`, `toparty`, `totag`。不传默认设置 `touser=@all`
 
+mediaid 不使用可以不传，mediaid 为空则取配置文件中的 mediaid。
+
 GET方式
 
-`http://ip:port/CORP_SECRET?title=消息标题&content=消息内容&type=消息类型`
+`http://ip:port/CORP_SECRET?title=消息标题&content=消息内容&type=消息类型&mediaid=mediaid`
 
 POST方式
 
 ```bash
 $ curl --location --request POST 'http://ip:port/CORP_SECRET' \
 --header 'Content-Type: application/json;charset=utf-8' \
---data-raw '{"title":"消息标题","content":"消息内容","type":"消息类型"}'
+--data-raw '{"title":"消息标题","content":"消息内容","type":"消息类型","mediaid":"mediaid"}'
 ```
 
 发送成功状态码返回200，`"Content-Type":"application/json"` body `{"errorCode":0,"errorMessage":""}` 。
