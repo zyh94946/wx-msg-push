@@ -120,6 +120,9 @@ func GoSendMsg(c *gin.Context) {
 	case config.MsgTypeText:
 		appMsg = api.NewText(opts)
 
+	case config.MsgTypeMarkdown:
+		appMsg = api.NewMarkdown(opts)
+
 	default:
 		appMsg = api.NewMpNews(opts)
 	}
