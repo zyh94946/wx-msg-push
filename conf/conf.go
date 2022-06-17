@@ -6,6 +6,7 @@ import (
 	"github.com/BurntSushi/toml"
 	"log"
 	"os"
+	"strconv"
 	"sync/atomic"
 	"time"
 )
@@ -23,6 +24,30 @@ func Init(confPath string) {
 
 	atomicConf.Store(config)
 	go refreshConfig(confPath)
+}
+
+func InitParams(confParams map[string]string) {
+	config := conf{}
+	config.Server.Addr = confParams["addr"]
+	if _, exist := confParams["maxhttptime"]; exist {
+		if err := config.Server.MaxHTTPTime.UnmarshalText([]byte(confParams["maxhttptime"])); err != nil {
+			log.Println(err)
+			os.Exit(1)
+		}
+	} else {
+		config.Server.MaxHTTPTime.Duration = time.Second * 5
+	}
+	cs := confParams["corpsecret"]
+	config.WeChatConf = map[string]*WeChatConf{}
+	config.WeChatConf[cs] = &WeChatConf{
+		CorpId:     confParams["corpid"],
+		CorpSecret: confParams["corpsecret"],
+		MediaId:    confParams["mediaid"],
+	}
+	config.WeChatConf[cs].AgentId, _ = strconv.ParseInt(confParams["agentid"], 10, 64)
+	config.WeChatConf[cs].EnableDuplicateCheck, _ = strconv.Atoi(confParams["enableduplicatecheck"])
+	config.WeChatConf[cs].DuplicateCheckInterval, _ = strconv.Atoi(confParams["duplicatecheckinterval"])
+	atomicConf.Store(config)
 }
 
 func GetConfig() conf {
@@ -52,7 +77,7 @@ func refreshConfig(confPath string) {
 
 type conf struct {
 	Server     Server
-	WeChatConf map[string]WeChatConf
+	WeChatConf map[string]*WeChatConf
 }
 
 type WeChatConf struct {

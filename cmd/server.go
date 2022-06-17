@@ -13,17 +13,21 @@ import (
 
 func Server() *cobra.Command {
 	var (
-		cfgPath string
+		cfgPath   string
+		cfgParams map[string]string
 	)
 	cmdServer := &cobra.Command{
 		Use:   "server",
 		Short: "Start Run wx-msg-push server",
 		Run: func(cmd *cobra.Command, args []string) {
-			if len(cfgPath) == 0 {
+			if cfgPath != "" {
+				conf.Init(cfgPath)
+			} else if len(cfgParams) > 0 {
+				conf.InitParams(cfgParams)
+			} else {
 				_ = cmd.Help()
 				os.Exit(0)
 			}
-			conf.Init(cfgPath)
 		},
 		PostRunE: func(cmd *cobra.Command, args []string) error {
 			err := run()
@@ -34,6 +38,7 @@ func Server() *cobra.Command {
 		},
 	}
 	cmdServer.Flags().StringVarP(&cfgPath, "conf", "c", "", "server config [toml]")
+	cmdServer.Flags().StringToStringVarP(&cfgParams, "conf-map", "m", nil, "server config, example: 'addr=xxx,corpid=xxx,corpsecret=xxx,agentid=xxx'")
 	return cmdServer
 }
 
