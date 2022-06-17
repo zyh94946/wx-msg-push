@@ -1,0 +1,8 @@
+version: '3.4'
+services:
+  wx-msg-push:
+    image: zyh94946/wx-msg-push
+    ports:
+      - "8777:8777"
+    command: server -m 'addr=:8777,corpid=xxx,corpsecret=xxx,agentid=1000002,mediaid=xxx,enableduplicatecheck=0,duplicatecheckinterval=0,maxhttptime=3s'
+    restart: always

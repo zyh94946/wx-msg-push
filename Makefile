@@ -22,7 +22,7 @@ runs:
 	@zip -du $(NAME)-$@ ${CFGPATH}
 	@echo "<<< ---- $(NAME)-$@"
 
-release: darwin-amd64.zip linux-amd64.zip freebsd-amd64.zip windows-amd64.zip
+release: darwin-amd64.zip linux-amd64.zip windows-amd64.zip
 
 darwin-amd64:
 	mkdir -p $(BUILD_DIR)/$@
@@ -31,12 +31,10 @@ darwin-amd64:
 linux-amd64:
 	mkdir -p $(BUILD_DIR)/$@
 	GOARCH=amd64 GOOS=linux $(GOBUILD)/$@
-
-freebsd-amd64:
-	mkdir -p $(BUILD_DIR)/$@
-	GOARCH=amd64 GOOS=freebsd $(GOBUILD)/$@
+	upx $(BUILD_DIR)/$@/$(NAME)
 
 windows-amd64:
 	mkdir -p $(BUILD_DIR)/$@
 	GOARCH=amd64 GOOS=windows $(GOBUILD)/$@
+	upx $(BUILD_DIR)/$@/$(NAME).exe
 
